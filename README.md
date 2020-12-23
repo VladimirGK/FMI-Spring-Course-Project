@@ -1,2 +1,2 @@
 # FMI-Spring-Course-Project
-Spring Framework university course
+Spring Framework university course.
