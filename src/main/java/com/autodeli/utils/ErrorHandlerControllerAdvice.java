@@ -34,7 +34,7 @@ public class ErrorHandlerControllerAdvice {
         .body(new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage()));
   }
 
-  @ExceptionHandler({ JwtException.class, AuthenticationException.class})
+  @ExceptionHandler({JwtException.class, AuthenticationException.class})
   public ResponseEntity<ErrorResponse> handleAuthenticationException(RuntimeException ex) {
     return ResponseEntity.badRequest()
         .body(new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), ex.getMessage()));
