@@ -1,6 +1,7 @@
-package com.autodeli.service;
+package com.autodeli.service.user;
 
-import com.autodeli.web.User;
+import com.autodeli.web.ShoppingCart;
+import com.autodeli.web.user.User;
 
 import java.util.List;
 
@@ -19,6 +20,8 @@ public interface UserService {
   User deleteUser(String id);
 
   boolean existsByUsername(String username);
+
+  ShoppingCart getShoppingCart();
 
   long getCount();
 }

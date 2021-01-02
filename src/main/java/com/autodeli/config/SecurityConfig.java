@@ -1,6 +1,6 @@
 package com.autodeli.config;
 
-import com.autodeli.service.UserService;
+import com.autodeli.service.user.UserService;
 import com.autodeli.utils.FilterChainExceptionHandlerFilter;
 import com.autodeli.utils.JwtAuthenticationEntryPoint;
 import com.autodeli.utils.JwtAuthenticationFilter;
@@ -15,8 +15,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 
-import static com.autodeli.web.Role.ADMIN;
-import static com.autodeli.web.Role.USER;
+import static com.autodeli.web.user.Role.ADMIN;
+import static com.autodeli.web.user.Role.USER;
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.http.HttpMethod.DELETE;
 

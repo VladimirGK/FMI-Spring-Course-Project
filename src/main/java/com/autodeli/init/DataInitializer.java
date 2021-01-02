@@ -1,12 +1,11 @@
 package com.autodeli.init;
 
-import com.autodeli.repository.UserRepository;
+import com.autodeli.repository.user.UserRepository;
 import com.autodeli.repository.car.AutoPartRepository;
 import com.autodeli.repository.car.BrandRepository;
 import com.autodeli.repository.car.EngineRepository;
 import com.autodeli.repository.car.ModelRepository;
-import com.autodeli.web.Role;
-import com.autodeli.web.User;
+import com.autodeli.web.user.User;
 import com.autodeli.web.car.AutoPart;
 import com.autodeli.web.car.Brand;
 import com.autodeli.web.car.Engine;
@@ -19,10 +18,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Set;
 
-import static com.autodeli.web.Role.ADMIN;
-import static com.autodeli.web.Role.USER;
+import static com.autodeli.web.user.Role.ADMIN;
+import static com.autodeli.web.user.Role.USER;
 
 @Component
 public class DataInitializer implements CommandLineRunner {

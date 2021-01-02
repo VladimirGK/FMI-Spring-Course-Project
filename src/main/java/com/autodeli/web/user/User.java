@@ -1,9 +1,9 @@
-package com.autodeli.web;
+package com.autodeli.web.user;
 
+import com.autodeli.web.ShoppingCart;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import org.hibernate.validator.constraints.URL;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
@@ -51,6 +51,8 @@ public class User implements UserDetails {
   private boolean active = true;
 
   private Set<Role> roles = new HashSet<>(Arrays.asList(Role.USER, Role.ADMIN));
+
+  private ShoppingCart shoppingCart = new ShoppingCart();
 
   @PastOrPresent
   private LocalDateTime created = LocalDateTime.now();

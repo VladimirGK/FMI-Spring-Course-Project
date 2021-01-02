@@ -1,5 +1,6 @@
 package com.autodeli.web.consumable;
 
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.data.mongodb.core.mapping.Document;

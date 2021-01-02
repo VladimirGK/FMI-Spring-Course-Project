@@ -1,7 +1,7 @@
 package com.autodeli.utils;
 
-import com.autodeli.service.UserService;
-import com.autodeli.web.User;
+import com.autodeli.service.user.UserService;
+import com.autodeli.web.user.User;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

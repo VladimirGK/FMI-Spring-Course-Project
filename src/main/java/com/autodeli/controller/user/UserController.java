@@ -1,17 +1,19 @@
-package com.autodeli.controller;
+package com.autodeli.controller.user;
 
 import com.autodeli.exception.InvalidEntityDataException;
-import com.autodeli.service.UserService;
-import com.autodeli.web.User;
+import com.autodeli.service.user.UserService;
+import com.autodeli.web.ShoppingCart;
+import com.autodeli.web.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/user")
 public class UserController {
   private final UserService userService;
 
@@ -54,5 +56,4 @@ public class UserController {
     userService.deleteUser(id);
     return removed;
   }
-
 }

@@ -1,6 +1,6 @@
 package com.autodeli.utils;
 
-import com.autodeli.web.ErrorResponse;
+import com.autodeli.web.user.ErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.JwtException;
 import org.slf4j.Logger;

@@ -1,12 +1,12 @@
-package com.autodeli.controller;
+package com.autodeli.controller.user;
 
 import com.autodeli.exception.InvalidEntityDataException;
-import com.autodeli.service.UserService;
+import com.autodeli.service.user.UserService;
 import com.autodeli.utils.JwtUtils;
-import com.autodeli.web.Credentials;
-import com.autodeli.web.JwtResponse;
-import com.autodeli.web.Role;
-import com.autodeli.web.User;
+import com.autodeli.web.user.Credentials;
+import com.autodeli.web.user.JwtResponse;
+import com.autodeli.web.user.Role;
+import com.autodeli.web.user.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;

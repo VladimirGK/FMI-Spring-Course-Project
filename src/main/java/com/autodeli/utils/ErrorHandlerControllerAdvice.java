@@ -3,7 +3,7 @@ package com.autodeli.utils;
 
 import com.autodeli.exception.EntityNotFoundException;
 import com.autodeli.exception.InvalidEntityDataException;
-import com.autodeli.web.ErrorResponse;
+import com.autodeli.web.user.ErrorResponse;
 import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,10 +1,11 @@
-package com.autodeli.service.impl;
+package com.autodeli.service.user.impl;
 
 import com.autodeli.exception.EntityNotFoundException;
 import com.autodeli.exception.InvalidEntityDataException;
-import com.autodeli.repository.UserRepository;
-import com.autodeli.service.UserService;
-import com.autodeli.web.User;
+import com.autodeli.repository.user.UserRepository;
+import com.autodeli.service.user.UserService;
+import com.autodeli.web.ShoppingCart;
+import com.autodeli.web.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -65,6 +66,11 @@ public class UserServiceImpl implements UserService {
   @Override
   public boolean existsByUsername(String username) {
     return userRepository.existsByUsername(username);
+  }
+
+  @Override
+  public ShoppingCart getShoppingCart() {
+    return null;
   }
 
   @Override

@@ -1,6 +1,6 @@
-package com.autodeli.repository;
+package com.autodeli.repository.user;
 
-import com.autodeli.web.User;
+import com.autodeli.web.user.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
