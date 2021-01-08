@@ -1,5 +1,8 @@
 package com.autodeli.init;
 
+import com.autodeli.repository.consumable.BatteryRepository;
+import com.autodeli.repository.consumable.OilRepository;
+import com.autodeli.repository.consumable.SupplementRepository;
 import com.autodeli.repository.user.UserRepository;
 import com.autodeli.repository.car.AutoPartRepository;
 import com.autodeli.repository.car.BrandRepository;
@@ -30,17 +33,25 @@ public class DataInitializer implements CommandLineRunner {
   private final ModelRepository modelRepository;
   private final BrandRepository brandRepository;
 
+  private final OilRepository oilRepository;
+  private final SupplementRepository supplementRepository;
+  private final BatteryRepository batteryRepository;
+
   private final UserRepository userRepository;
 
   PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
   @Autowired
   public DataInitializer(AutoPartRepository autoPartRepository, EngineRepository engineRepository, ModelRepository modelRepository,
-      BrandRepository brandRepository, UserRepository userRepository) {
+      BrandRepository brandRepository, OilRepository oilRepository, SupplementRepository supplementRepository, BatteryRepository batteryRepository,
+      UserRepository userRepository) {
     this.autoPartRepository = autoPartRepository;
     this.engineRepository = engineRepository;
     this.modelRepository = modelRepository;
     this.brandRepository = brandRepository;
+    this.oilRepository = oilRepository;
+    this.supplementRepository = supplementRepository;
+    this.batteryRepository = batteryRepository;
     this.userRepository = userRepository;
   }
 
@@ -52,17 +63,19 @@ public class DataInitializer implements CommandLineRunner {
     AutoPart waterPomp = new AutoPart("Water Pomp", "Audi", "A4", "1.9TDI", "https://www.waterpomp.png", 102.20);
     AutoPart turbo = new AutoPart("Turbo", "Audi", "A4", "1.9TDI", "http://www.tofast4you.com", 232);
 
-
-
-    autoPartRepository.deleteAll();
-    engineRepository.deleteAll();
-    modelRepository.deleteAll();
-    brandRepository.deleteAll();
-    userRepository.deleteAll();
+//    autoPartRepository.deleteAll();
+//    engineRepository.deleteAll();
+//    modelRepository.deleteAll();
+//    brandRepository.deleteAll();
+//    userRepository.deleteAll();
+//    oilRepository.deleteAll();
+//    supplementRepository.deleteAll();
+//    batteryRepository.deleteAll();
 
     User admin = new User("admin", "admin", "admin", encoder.encode("admin123"),
         new HashSet<>(Arrays.asList(ADMIN, USER)));
+//    userRepository.save(admin);
 
-    userRepository.save(admin);
+
   }
 }
