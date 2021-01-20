@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.data.annotation.Id;
 
@@ -16,7 +15,6 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
 public abstract class Consumable {
@@ -41,4 +39,12 @@ public abstract class Consumable {
   private String photoUrl;
   private LocalDateTime created = LocalDateTime.now();
   private LocalDateTime modified = LocalDateTime.now();
+
+  public Consumable(@Size(min = 2, max = 80) @NonNull @NotNull String name, @Size(min = 2, max = 20) @NonNull @NotNull String brand,
+      @NonNull @NotNull float price, @URL @NonNull @NotNull String photoUrl) {
+    this.name = name;
+    this.brand = brand;
+    this.price = price;
+    this.photoUrl = photoUrl;
+  }
 }

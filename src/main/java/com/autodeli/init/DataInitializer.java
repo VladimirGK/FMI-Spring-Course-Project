@@ -57,25 +57,43 @@ public class DataInitializer implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
-    Brand audi = new Brand("Audi", "https://www.photo.png");
-    Model a4 = new Model("A4", "Audi");
-    Engine TDI1_9 = new Engine("A4", "1.9TDI", "A4");
-    AutoPart waterPomp = new AutoPart("Water Pomp", "Audi", "A4", "1.9TDI", "https://www.waterpomp.png", 102.20);
-    AutoPart turbo = new AutoPart("Turbo", "Audi", "A4", "1.9TDI", "http://www.tofast4you.com", 232);
-
-//    autoPartRepository.deleteAll();
-//    engineRepository.deleteAll();
-//    modelRepository.deleteAll();
-//    brandRepository.deleteAll();
-//    userRepository.deleteAll();
-//    oilRepository.deleteAll();
-//    supplementRepository.deleteAll();
-//    batteryRepository.deleteAll();
+    autoPartRepository.deleteAll();
+    engineRepository.deleteAll();
+    modelRepository.deleteAll();
+    brandRepository.deleteAll();
+    userRepository.deleteAll();
+    oilRepository.deleteAll();
+    supplementRepository.deleteAll();
+    batteryRepository.deleteAll();
 
     User admin = new User("admin", "admin", "admin", encoder.encode("admin123"),
         new HashSet<>(Arrays.asList(ADMIN, USER)));
-//    userRepository.save(admin);
+    userRepository.save(admin);
 
+    brandRepository.save(new Brand("Audi", "https://www.photo.png"));
+    brandRepository.save(new Brand("Mercedes-Benz", "https://www.photo.png"));
+    brandRepository.save(new Brand("BMW", "https://www.photo.png"));
+    brandRepository.save(new Brand("Mazda", "https://www.photo.png"));
+    brandRepository.save(new Brand("Opel", "https://www.photo.png"));
+
+    modelRepository.save(new Model("A4", "Audi"));
+    modelRepository.save(new Model("A6", "Audi"));
+    modelRepository.save(new Model("A8", "Audi"));
+    modelRepository.save(new Model("M4", "BMW"));
+    modelRepository.save(new Model("M6", "BMW"));
+    modelRepository.save(new Model("S-CLASS", "Mercedes-Benz"));
+    modelRepository.save(new Model("G-GLASS", "Mercedes-Benz"));
+
+    engineRepository.save(new Engine("1.9TDI", "Audi", "A4"));
+    engineRepository.save(new Engine("2.5TDI", "Audi", "A4"));
+    engineRepository.save(new Engine("3.2TFSI", "BMW", "M4"));
+    engineRepository.save(new Engine("4.2TFSI", "BMW", "M6"));
+    engineRepository.save(new Engine("2.2CDI", "Mercedes-Benz", "S-CLASS"));
+
+    autoPartRepository.save(new AutoPart("Water Pomp", "Audi", "A4", "1.9TDI", "https://www.waterpomp.png", 102.20));
+    autoPartRepository.save(new AutoPart("Turbo", "Audi", "A4", "1.9TDI", "https://www.waterpomp.png", 220.20));
+    autoPartRepository.save(new AutoPart("Preden nosach", "Audi", "A4", "1.9TDI", "https://www.waterpomp.png", 102.20));
+    autoPartRepository.save(new AutoPart("Gumi FULDA", "Audi", "A4", "1.9TDI", "https://www.waterpomp.png", 102.20));
 
   }
 }

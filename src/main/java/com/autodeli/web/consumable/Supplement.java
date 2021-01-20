@@ -9,6 +9,9 @@ import javax.validation.constraints.Size;
 
 @Document(collection = "supplements")
 public class Supplement extends Consumable {
+  public Supplement() {
+    super();
+  }
 
   public Supplement(@Size(min = 2, max = 80) @NonNull @NotNull String name, @Size(min = 2, max = 20) @NonNull @NotNull String brand,
       @NonNull @NotNull float price, @URL @NonNull @NotNull String photoUrl) {
