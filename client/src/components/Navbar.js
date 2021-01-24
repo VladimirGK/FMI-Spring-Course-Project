@@ -1,72 +1,124 @@
 import React from "react";
+import { Component } from 'react';
 import {
     BrowserRouter as Router,
     Switch,
     Route,
+    NavLink,
     Link
 } from "react-router-dom";
-import AllOils from "./Oils/AllOils";
+import GetOils from "./Oils/GetOils";
+import GetBatteries from './Batteries/GetBatteries';
+import GetSupplements from './Supplements/GetSupplements';
 import Admin from './Admin'
 import Home from './Home'
-import AutoParts from './AutoParts'
+import AutoParts from './AutoParts/AutoParts'
+import Register from "./UserManagement/Register";
+import Login from "./UserManagement/Login";
+import AuthenticationService from './UserManagement/AuthenticationService'
 
-export default function App() {
-    return (
-        <Router>
-        <div>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="/">Autodeli</a>
-                    <div class="collapse navbar-collapse" id="navbarText">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <Link class="nav-link" a to="/oils">Масла</Link>
-                            </li>
-                            <li class="nav-item">
-                                <Link class="nav-link" a to="/about">Акумолатори</Link>
-                            </li>
-                            <li class="nav-item">
-                                <Link class="nav-link" a to="/users">Добавки</Link>
-                            </li>
-                            <li class="nav-item">
-                                <Link class="nav-link" a to="/admin">Админ конзола</Link>
-                            </li>
-                        </ul>
-                        <div>
-                            <button type="button" class="btn btn-light" style={{marginRight: "10px"}}>Login</button>
-                            <button type="button" class="btn btn-light">Register</button>
+
+class Navbar extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {isOpen: false};
+
+        this.state = {
+          showUser: false,
+          showAdmin: false,
+          username: undefined,
+          login: false
+        };
+      }
+
+      componentDidMount() {
+        const user = AuthenticationService.getCurrentUser();
+        if (user) { 
+          const roles = [];
+    
+          user.user.authorities.forEach(authority => {
+            roles.push(authority.authority);
+          });
+      
+          this.setState({
+            showUser: true,
+            showAdmin: roles.includes("ROLE_ADMIN"),
+            login: true,
+            username: user.user.username
+          });
+        }
+      }
+
+      signOut = () => {
+        AuthenticationService.signOut();
+        window.location.reload();
+      }
+
+    render() {
+        return (
+            <div>
+              <Router>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="/">Autodeli</a>
+                        <div class="collapse navbar-collapse" id="navbarText">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                    <Link class="nav-link" a to="/oils">Масла</Link>
+                                </li>
+                                <li class="nav-item">
+                                    <Link class="nav-link" a to="/batteries">Акумолатори</Link>
+                                </li>
+                                <li class="nav-item">
+                                    <Link class="nav-link" a to="/supplements">Добавки</Link>
+                                </li>
+                                <li class="nav-item">
+                                    {this.state.showAdmin && <Link class="nav-link" a to="/admin">Админ конзола</Link>}
+                                </li>
+                            </ul>
+                            <div>
+                                {!this.state.login && <Link class="btn btn-light" style={{ marginRight: "10px" }} a to="/register">Регистрация</Link>}
+                                {!this.state.login && <Link class="btn btn-light" style={{ marginRight: "10px" }} a to="/login">Вход</Link>}
+                                {this.state.login && <Link class="btn btn-light"  style={{ marginRight: "10px" }} a to="/"> Добре дошли, {this.state.username}</Link>}
+                                {this.state.login && <Link class="btn btn-light" onClick={this.signOut} style={{ marginRight: "10px" }} a to="/">Изход</Link>}
+                            </div>
                         </div>
                     </div>
-                </div>
-            </nav>
-            <Switch>
-                <Route path="/oils">
-                    <AllOils/>
-                </Route>
-                <Route path="/batteries">
-                    <Users />
-                </Route>
-                <Route path="/batteries">
-                    <Users />
-                </Route>
-                <Route path="/supplements">
-                    <Users />
-                </Route>
-                <Route path="/admin">
-                    <Admin/>
-                </Route>
-                <Route path="/autoparts">
-                    <AutoParts/>
-                </Route>
-                <Route path="/">
-                    <Home />
-                </Route>
-            </Switch>
-        </div>
-        </Router>
-    )
+                </nav>
+                    <Switch>
+                        <Route path="/login">
+                            <Login />
+                        </Route>
+                        <Route path="/register">
+                            <Register />
+                        </Route>
+                        <Route path="/oils">
+                            <GetOils />
+                        </Route>
+                        <Route path="/batteries">
+                            <GetBatteries />
+                        </Route>
+                        <Route path="/supplements">
+                            <GetSupplements />
+                        </Route>
+                        <Route path="/admin">
+                            <Admin />
+                        </Route>
+                        <Route path="/autoparts">
+                            <AutoParts/>
+                        </Route>
+                        <Route path="/">
+                            <Home/>
+                        </Route>
+                        
+                    </Switch>
+                    </Router>
+
+            </div>
+
+        )
+    }
 }
-  
-  function Users() {
-    return <h2>Users</h2>;
-  }
+
+export default Navbar;

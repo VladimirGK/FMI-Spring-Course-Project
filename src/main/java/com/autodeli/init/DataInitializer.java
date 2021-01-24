@@ -66,8 +66,8 @@ public class DataInitializer implements CommandLineRunner {
     supplementRepository.deleteAll();
     batteryRepository.deleteAll();
 
-    User admin = new User("admin", "admin", "admin", encoder.encode("admin123"),
-        new HashSet<>(Arrays.asList(ADMIN, USER)));
+    User admin = new User("admin", "admin", "admin", "admin@admin.com", encoder.encode("asdqwe123"));
+    admin.setRoles(new HashSet<>(Arrays.asList(ADMIN, USER)));
     userRepository.save(admin);
 
     brandRepository.save(new Brand("Audi", "https://www.photo.png"));

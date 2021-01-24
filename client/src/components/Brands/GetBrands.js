@@ -15,7 +15,7 @@ export default class AllOils extends Component {
     }
 
     componentDidMount() {
-        axios.get(`http://localhost:8080/api/oil`)
+        axios.get(`http://localhost:8080/api/brand`)
             .then(res => {
                 const items = res.data;
                 this.setState({ items });
@@ -25,7 +25,7 @@ export default class AllOils extends Component {
     }
 
     deleteRow(id, e) {
-        axios.delete(`http://localhost:8080/api/oil/${id}`)
+        axios.delete(`http://localhost:8080/api/brand/${id}`)
             .then(res => {
                 console.log(res);
                 console.log(res.data);
@@ -41,7 +41,7 @@ export default class AllOils extends Component {
         if (isEmpty) {
             return (
                     <div class="alert alert-success alert-dismissible fade show">
-                        <strong>Няма намерени масла</strong>
+                        <strong>Няма намерени марки</strong>
                     </div>
             )
         } else {
@@ -50,12 +50,9 @@ export default class AllOils extends Component {
                         {
                             this.state.items.map((item) => (
                                 <div class="row" key={item.id} style={{ marginTop: "20px" }}>
-                                    <div class="col-sm"><img src={item.photoUrl} width="120px" height="120px"></img></div>
+                                    <div class="col-sm"><img src={item.logoUrl} width="120px" height="120px"></img></div>
                                     <div class="col-sm">{item.name}</div>
-                                    <div class="col-sm">{item.price}</div>
-                                    <div class="col-sm"><button type="button" class="btn btn-primary">Добави в количка</button></div>
                                     <div class="col-sm"><button type="button" class="btn btn-primary" onClick={(e) => this.deleteRow(item.id, e)}>Delete</button></div>
-                                    <div class="col-sm"><Link to="/admin" className="btn btn-primary">Edit</Link></div>
                                 </div>
                             ))
                         }

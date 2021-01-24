@@ -14,6 +14,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -23,6 +24,7 @@ import java.util.HashSet;
 import static com.autodeli.utils.ErrorHandlingUtils.getErrors;
 
 @RestController
+@RequestMapping("/api/auth")
 @Slf4j
 public class LoginController {
   @Autowired
@@ -32,7 +34,7 @@ public class LoginController {
   @Autowired
   private AuthenticationManager authenticationManager;
 
-  @PostMapping("/api/login")
+  @PostMapping("/signin")
   public JwtResponse login(@Valid @RequestBody Credentials credentials, Errors errors) {
     if (errors.hasErrors()) {
       throw new InvalidEntityDataException("Invalid username or password");
@@ -45,7 +47,7 @@ public class LoginController {
     return new JwtResponse(user, token);
   }
 
-  @PostMapping("/api/register")
+  @PostMapping("/signup")
   public User register(@Valid @RequestBody User user, Errors errors) {
     if (errors.hasErrors()) {
       throw new InvalidEntityDataException("Invalid user data", getErrors(errors));

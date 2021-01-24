@@ -14,7 +14,6 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
 public abstract class Consumable {
@@ -40,6 +39,8 @@ public abstract class Consumable {
   private LocalDateTime created = LocalDateTime.now();
   private LocalDateTime modified = LocalDateTime.now();
 
+  public Consumable() {
+  }
   public Consumable(@Size(min = 2, max = 80) @NonNull @NotNull String name, @Size(min = 2, max = 20) @NonNull @NotNull String brand,
       @NonNull @NotNull float price, @URL @NonNull @NotNull String photoUrl) {
     this.name = name;

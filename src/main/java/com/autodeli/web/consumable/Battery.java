@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Document(collection = "batteries")
-
 public class Battery extends Consumable {
 
   public Battery() {
