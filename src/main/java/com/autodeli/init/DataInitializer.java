@@ -68,7 +68,7 @@ public class DataInitializer implements CommandLineRunner {
 
     User admin = new User("admin", "admin", "admin", "admin@admin.com", encoder.encode("asdqwe123"));
     admin.setRoles(new HashSet<>(Arrays.asList(ADMIN, USER)));
-    userRepository.save(admin);
+    //userRepository.save(admin);
 
     brandRepository.save(new Brand("Audi", "https://www.photo.png"));
     brandRepository.save(new Brand("Mercedes-Benz", "https://www.photo.png"));
@@ -90,10 +90,10 @@ public class DataInitializer implements CommandLineRunner {
     engineRepository.save(new Engine("4.2TFSI", "BMW", "M6"));
     engineRepository.save(new Engine("2.2CDI", "Mercedes-Benz", "S-CLASS"));
 
-    autoPartRepository.save(new AutoPart("Water Pomp", "Audi", "A4", "1.9TDI", "https://www.waterpomp.png", 102.20));
-    autoPartRepository.save(new AutoPart("Turbo", "Audi", "A4", "1.9TDI", "https://www.waterpomp.png", 220.20));
-    autoPartRepository.save(new AutoPart("Preden nosach", "Audi", "A4", "1.9TDI", "https://www.waterpomp.png", 102.20));
-    autoPartRepository.save(new AutoPart("Gumi FULDA", "Audi", "A4", "1.9TDI", "https://www.waterpomp.png", 102.20));
+    autoPartRepository.save(new AutoPart("Водна помпа", "Audi", "A4", "1.9TDI", "https://previews.123rf.com/images/notsuperstar/notsuperstar1711/notsuperstar171100279/90500392-car-water-pump-isolated-on-a-white-background.jpg", 102.20));
+    autoPartRepository.save(new AutoPart("Турбо", "Audi", "A4", "1.9TDI", "https://car-images.bauersecure.com/pagefiles/94153/turbo_050.jpg", 220.20));
+    autoPartRepository.save(new AutoPart("Трансмисия", "Audi", "A4", "1.9TDI", "https://i.ytimg.com/vi/RQWejyx0gi8/hqdefault.jpg", 102.20));
+    autoPartRepository.save(new AutoPart("Гуми", "Audi", "A4", "1.9TDI", "https://di-uploads-pod7.dealerinspire.com/usedcarking/uploads/2018/08/tires.png", 102.20));
 
   }
 }

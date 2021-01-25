@@ -15,7 +15,9 @@ import Home from './Home'
 import AutoParts from './AutoParts/AutoParts'
 import Register from "./UserManagement/Register";
 import Login from "./UserManagement/Login";
+import Cart from './Cart'
 import AuthenticationService from './UserManagement/AuthenticationService'
+import cart from '../cart.png'
 
 
 class Navbar extends Component {
@@ -40,7 +42,6 @@ class Navbar extends Component {
           user.user.authorities.forEach(authority => {
             roles.push(authority.authority);
           });
-      
           this.setState({
             showUser: true,
             showAdmin: roles.includes("ROLE_ADMIN"),
@@ -81,6 +82,7 @@ class Navbar extends Component {
                                 {!this.state.login && <Link class="btn btn-light" style={{ marginRight: "10px" }} a to="/register">Регистрация</Link>}
                                 {!this.state.login && <Link class="btn btn-light" style={{ marginRight: "10px" }} a to="/login">Вход</Link>}
                                 {this.state.login && <Link class="btn btn-light"  style={{ marginRight: "10px" }} a to="/"> Добре дошли, {this.state.username}</Link>}
+                                {this.state.login && <Link a to="/cart"><img src={cart} width="40px" height="40"/></Link>}
                                 {this.state.login && <Link class="btn btn-light" onClick={this.signOut} style={{ marginRight: "10px" }} a to="/">Изход</Link>}
                             </div>
                         </div>
@@ -107,6 +109,9 @@ class Navbar extends Component {
                         </Route>
                         <Route path="/autoparts">
                             <AutoParts/>
+                        </Route>
+                        <Route path="/cart">
+                            <Cart/>
                         </Route>
                         <Route path="/">
                             <Home/>

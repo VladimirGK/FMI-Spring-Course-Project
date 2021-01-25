@@ -14,24 +14,28 @@ export default class AutoParts extends Component {
 
     state = {
         items: [],
+        isLogged: false,
+        token: "",
     }
 
     componentDidMount() {
-        console.log("URL IS " + partsUrl);
+        const user = JSON.parse(localStorage.getItem('user'));
+        if(user) {
+            this.setState({isLogged: true, token: user.token})
+        }
+        this.setState({})
         axios.get(partsUrl)
             .then(res => {
                 const items = res.data;
-                this.setState({ items });
+                this.setState({ items: items });
                 console.log(res);
                 console.log(res.data);
             })
     }
 
     addToCart(item, e) {
-        const user = JSON.parse(localStorage.getItem('user'));
-        console.log(user.token);
         const headers = {
-            'Authorization': 'Bearer ' + user.token,
+            'Authorization': 'Bearer ' + this.state.token,
             'Content-Type': 'application/json'
         }
         console.log(item);
@@ -60,10 +64,10 @@ export default class AutoParts extends Component {
                         {
                             this.state.items.map((item) => (
                                 <div class="row" key={item.id} style={{ marginTop: "20px" }}>
-                                    <div class="col-sm"><img src={item.photoUrl} width="120px" height="120px"></img></div>
+                                    <div class="col-sm"><img src={item.partPhoto} width="120px" height="120px"></img></div>
                                     <div class="col-sm">{item.name}</div>
                                     <div class="col-sm">{item.price}лв.</div>
-                                    <div class="col-sm"><button type="button" class="btn btn-primary" onClick={(e) => this.addToCart(item, e)}>Добави в количка</button></div>
+                                    {this.state.isLogged && <div class="col-sm"><button type="button" class="btn btn-secondary" onClick={(e) => this.addToCart(item, e)}>Добави в количка</button></div>}
                                 </div>
                             ))
                         }
