@@ -12,13 +12,32 @@ export default class AllOils extends Component {
 
     state = {
         items: [],
+        isLogged: false,
+        token: "",
     }
 
     componentDidMount() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            this.setState({ isLogged: true, token: user.token })
+        }
         axios.get(`http://localhost:8080/api/oil`)
             .then(res => {
                 const items = res.data;
                 this.setState({ items });
+                console.log(res);
+                console.log(res.data);
+            })
+    }
+
+    addToCart(item, e) {
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.state.token
+        }
+        console.log(item);
+        axios.post(`http://localhost:8080/api/cart/oil`, item, { headers })
+            .then(res => {
                 console.log(res);
                 console.log(res.data);
             })
@@ -53,7 +72,7 @@ export default class AllOils extends Component {
                                     <div class="col-sm"><img src={item.photoUrl} width="120px" height="120px"></img></div>
                                     <div class="col-sm">{item.name}</div>
                                     <div class="col-sm">{item.price}лв.</div>
-                                    <div class="col-sm"><button type="button" class="btn btn-primary">Добави в количка</button></div>
+                                    <div class="col-sm"><button type="button" class="btn btn-primary" onClick={(e) => this.addToCart(item, e)}>Добави в количка</button></div>
                                     <div class="col-sm"><button type="button" class="btn btn-primary" onClick={(e) => this.deleteRow(item.id, e)}>Delete</button></div>
                                     <div class="col-sm"><Link to="/admin" className="btn btn-primary">Edit</Link></div>
                                 </div>

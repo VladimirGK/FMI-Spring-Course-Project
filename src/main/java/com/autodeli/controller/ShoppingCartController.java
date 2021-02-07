@@ -6,7 +6,9 @@ import com.autodeli.service.consumable.OilService;
 import com.autodeli.service.consumable.SupplementService;
 import com.autodeli.service.user.ShoppingCartService;
 import com.autodeli.web.car.AutoPart;
-import com.autodeli.web.consumable.Consumable;
+import com.autodeli.web.consumable.Battery;
+import com.autodeli.web.consumable.Oil;
+import com.autodeli.web.consumable.Supplement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,9 +36,19 @@ public class ShoppingCartController {
     return shoppingCartService.getAllAutoParts();
   }
 
-  @GetMapping("/consumable")
-  public Set<Consumable> getAllConsumables() {
-    return shoppingCartService.getAllConsumables();
+  @GetMapping("/battery")
+  public Set<Battery> getAllBatteries() {
+    return shoppingCartService.getAllBatteries();
+  }
+
+  @GetMapping("/oil")
+  public Set<Oil> getAllOils() {
+    return shoppingCartService.getAllOils();
+  }
+
+  @GetMapping("/supplement")
+  public Set<Supplement> getAllSupplements() {
+    return shoppingCartService.getAllSupplements();
   }
 
   @GetMapping("/price")
@@ -50,10 +62,22 @@ public class ShoppingCartController {
     return getAllAutoParts();
   }
 
-  @PostMapping("/consumable")
-  public Set<Consumable> addConsumable(@RequestBody Consumable consumable) {
-    shoppingCartService.addConsumableToCart(consumable);
-    return getAllConsumables();
+  @PostMapping("/battery")
+  public Set<Battery> addBattery(@RequestBody Battery battery) {
+    shoppingCartService.addBatteryToCart(battery);
+    return getAllBatteries();
+  }
+
+  @PostMapping("/oil")
+  public Set<Oil> addOil(@RequestBody Oil oil) {
+    shoppingCartService.addOilToCart(oil);
+    return getAllOils();
+  }
+
+  @PostMapping("/supplement")
+  public Set<Supplement> addSupplement(@RequestBody Supplement supplement) {
+    shoppingCartService.addSupplementToCart(supplement);
+    return getAllSupplements();
   }
 
   @DeleteMapping("/autopart/{id}")
@@ -63,16 +87,24 @@ public class ShoppingCartController {
     return removed;
   }
 
-  @DeleteMapping("/consumable/{id}")
-  public Consumable deleteConsumable(@PathVariable("id") String id) {
-    Consumable removed = null;
-    for(Consumable consumable : getAllConsumables()) {
-      if(consumable.getId().equals(id)) {
-        removed = consumable;
-        break;
-      }
-    }
-    shoppingCartService.deleteConsumableFromCart(removed);
+  @DeleteMapping("/battery/{id}")
+  public Battery deleteBattery(@PathVariable("id") String id) {
+    Battery removed = batteryService.getBatteryById(id);
+    shoppingCartService.deleteBatteryFromCart(removed);
+    return removed;
+  }
+
+  @DeleteMapping("/oil/{id}")
+  public Oil deleteOil(@PathVariable("id") String id) {
+    Oil removed = oilService.getOilById(id);
+    shoppingCartService.deleteOilFromCart(removed);
+    return removed;
+  }
+
+  @DeleteMapping("/supplement/{id}")
+  public Supplement deleteSupplement(@PathVariable("id") String id) {
+    Supplement removed = supplementService.getSupplementById(id);
+    shoppingCartService.deleteSupplementFromCart(removed);
     return removed;
   }
 

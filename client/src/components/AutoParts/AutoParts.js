@@ -20,8 +20,8 @@ export default class AutoParts extends Component {
 
     componentDidMount() {
         const user = JSON.parse(localStorage.getItem('user'));
-        if(user) {
-            this.setState({isLogged: true, token: user.token})
+        if (user) {
+            this.setState({ isLogged: true, token: user.token })
         }
         this.setState({})
         axios.get(partsUrl)

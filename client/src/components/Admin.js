@@ -15,7 +15,8 @@ export default class Admin extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            action: ''
+            action: '',
+            showAdmin: '',
         }
     }
     componentDidMount() {
@@ -60,7 +61,8 @@ export default class Admin extends Component {
     }
 
     render() {
-        if (!this.showAdmin) {
+        if (!this.state.showAdmin) {
+
             return (
                 <div>
                     <div class="alert alert-danger alert-dismissible fade show">

@@ -13,9 +13,15 @@ export default class Batteries extends Component {
 
     state = {
         items: [],
+        isLogged: false,
+        token: "",
     }
 
     componentDidMount() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            this.setState({ isLogged: true, token: user.token })
+        }
         axios.get(`http://localhost:8080/api/battery`)
             .then(res => {
                 const items = res.data;
@@ -37,10 +43,12 @@ export default class Batteries extends Component {
     }
     addToCart(item, e) {
         const headers = {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.state.token,
+
         }
         console.log(item);
-        axios.post(`http://localhost:8080/api/cart/consumable`, item, { headers })
+        axios.post(`http://localhost:8080/api/cart/battery`, item, { headers })
             .then(res => {
                 console.log(res);
                 console.log(res.data);
