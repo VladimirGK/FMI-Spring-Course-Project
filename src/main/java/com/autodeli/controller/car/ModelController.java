@@ -6,6 +6,7 @@ import com.autodeli.utils.ErrorHandlingUtils;
 import com.autodeli.web.car.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +42,7 @@ public class ModelController {
     return modelService.getModelById(id);
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @PostMapping
   public ResponseEntity<Model> addModel(@Valid @RequestBody Model model, Errors errors) {
     if (errors.hasErrors()) {
@@ -51,6 +53,7 @@ public class ModelController {
         .body(created);
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @PutMapping("/{id:^[A-Fa-f0-9]{24}$}")
   public Model updateModel(@PathVariable("id") String id, @Valid @RequestBody Model model, Errors errors) {
     if (errors.hasErrors()) {
@@ -62,6 +65,7 @@ public class ModelController {
     return modelService.updateModel(model);
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @DeleteMapping("/{id:^[A-Fa-f0-9]{24}$}")
   public Model deleteModel(@PathVariable("id") String id) {
     return modelService.deleteModel(id);

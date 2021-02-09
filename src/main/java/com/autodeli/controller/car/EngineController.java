@@ -6,6 +6,7 @@ import com.autodeli.utils.ErrorHandlingUtils;
 import com.autodeli.web.car.Engine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +43,7 @@ public class EngineController {
     return engineService.getEngineById(id);
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @PostMapping
   public ResponseEntity<Engine> addEngine(@Valid @RequestBody Engine Engine, Errors errors) {
     if (errors.hasErrors()) {
@@ -52,6 +54,7 @@ public class EngineController {
         .body(created);
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @PutMapping("/{id:^[A-Fa-f0-9]{24}$}")
   public Engine updateEngine(@PathVariable("id") String id, @Valid @RequestBody Engine Engine, Errors errors) {
     if (errors.hasErrors()) {
@@ -63,6 +66,7 @@ public class EngineController {
     return engineService.updateEngine(Engine);
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @DeleteMapping("/{id:^[A-Fa-f0-9]{24}$}")
   public Engine deleteEngine(@PathVariable("id") String id) {
     return engineService.deleteEngine(id);

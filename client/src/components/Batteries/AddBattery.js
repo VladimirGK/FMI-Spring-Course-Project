@@ -7,10 +7,19 @@ export default class AddBattery extends Component {
         name: '',
         brand: '',
         price: '',
-        photoUrl: ''
-
+        photoUrl: '',
+        token: ''
     }
 
+    componentDidMount() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            this.setState({
+                token: user.token
+            });
+        }
+    }
+    
     changeName = event => {
         this.setState({ name: event.target.value });
     }
@@ -34,6 +43,7 @@ export default class AddBattery extends Component {
             photoUrl: this.state.photoUrl
         };
         const headers = {
+            'Authorization': 'Bearer ' + this.state.token,
             'Content-Type': 'application/json'
         }
 

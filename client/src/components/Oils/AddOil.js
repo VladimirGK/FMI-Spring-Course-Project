@@ -7,8 +7,17 @@ export default class AddOil extends Component {
         name: '',
         brand: '',
         price: '',
-        photoUrl: ''
+        photoUrl: '',
+        token: ''
+    }
 
+    componentDidMount() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            this.setState({
+                token: user.token
+            });
+        }
     }
 
     changeName = event => {
@@ -34,6 +43,7 @@ export default class AddOil extends Component {
             photoUrl: this.state.photoUrl
         };
         const headers = {
+            'Authorization': 'Bearer ' + this.state.token,
             'Content-Type': 'application/json'
         }
 

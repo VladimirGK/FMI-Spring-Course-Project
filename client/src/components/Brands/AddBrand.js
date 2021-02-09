@@ -5,10 +5,18 @@ import { Component } from 'react';
 export default class AddOil extends Component {
     state = {
         name: '',
-        logoUrl: ''
-
+        logoUrl: '',
+        token: ''
     }
 
+    componentDidMount() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            this.setState({
+                token: user.token
+            });
+        }
+    }
     changeName = event => {
         this.setState({ name: event.target.value });
     }
@@ -25,7 +33,8 @@ export default class AddOil extends Component {
             logoUrl: this.state.logoUrl
         };
         const headers = {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.state.token,
         }
 
         axios.post(`http://localhost:8080/api/brand`, item, { headers })

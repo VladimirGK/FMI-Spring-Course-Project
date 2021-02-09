@@ -6,6 +6,7 @@ import com.autodeli.web.consumable.Supplement;
 import com.autodeli.utils.ErrorHandlingUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +42,7 @@ public class SupplementController {
     return supplementService.getSupplementById(id);
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @PostMapping
   public ResponseEntity<Supplement> addSupplements(@Valid @RequestBody Supplement supplement, Errors errors) {
     if (errors.hasErrors()) {
@@ -51,6 +53,7 @@ public class SupplementController {
         .body(created);
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @PutMapping("/{id:^[A-Fa-f0-9]{24}$}")
   public Supplement updateSupplement(@PathVariable("id") String id, @Valid @RequestBody Supplement supplement, Errors errors) {
     if (errors.hasErrors()) {
@@ -62,6 +65,7 @@ public class SupplementController {
     return supplementService.updateSupplement(supplement);
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @DeleteMapping("/{id:^[A-Fa-f0-9]{24}$}")
   public Supplement deleteSupplement(@PathVariable("id") String id) {
     return supplementService.deleteSupplement(id);

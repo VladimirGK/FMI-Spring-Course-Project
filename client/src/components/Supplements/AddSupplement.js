@@ -7,8 +7,17 @@ export default class AddSuplement extends Component {
         name: '',
         brand: '',
         price: '',
-        photoUrl: ''
+        photoUrl: '',
+        token: ''
+    }
 
+    componentDidMount() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            this.setState({
+                token: user.token
+            });
+        }
     }
 
     changeName = event => {
@@ -34,7 +43,8 @@ export default class AddSuplement extends Component {
             photoUrl: this.state.photoUrl
         };
         const headers = {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.state.token,
         }
 
         axios.post(`http://localhost:8080/api/supplement`, item, { headers })

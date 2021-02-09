@@ -10,6 +10,7 @@ import com.autodeli.web.consumable.Battery;
 import com.autodeli.web.consumable.Oil;
 import com.autodeli.web.consumable.Supplement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -17,6 +18,7 @@ import java.util.Set;
 @CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping("/api/cart")
+@PreAuthorize("hasRole('USER')")
 public class ShoppingCartController {
 
   @Autowired

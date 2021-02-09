@@ -2,19 +2,25 @@ package com.autodeli.controller.user;
 
 import com.autodeli.exception.InvalidEntityDataException;
 import com.autodeli.service.user.UserService;
-import com.autodeli.web.ShoppingCart;
 import com.autodeli.web.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
+@PreAuthorize("hasRole('ADMIN')")
 public class UserController {
   private final UserService userService;
 
@@ -24,7 +30,6 @@ public class UserController {
   }
 
   @GetMapping
-  @PreAuthorize("hasRole('ADMIN')")
   public List<User> getAllUsers() {
     return userService.getAllUsers();
   }

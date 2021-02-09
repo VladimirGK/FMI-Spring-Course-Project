@@ -43,7 +43,6 @@ public class LoginController {
         credentials.getUsername(), credentials.getPassword()));
     final User user = userService.getUserByUsername(credentials.getUsername());
     final String token = jwtUtils.generateToken(user);
-    log.info("Login successful for {}: {}", user.getUsername(), token); //remove it!
     return new JwtResponse(user, token);
   }
 

@@ -5,6 +5,7 @@ import com.autodeli.service.consumable.OilService;
 import com.autodeli.web.consumable.Oil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +43,7 @@ public class OilController {
     return oilService.getOilById(id);
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @PostMapping
   public ResponseEntity<Oil> addOils(@Valid @RequestBody Oil oil, Errors errors) {
     if (errors.hasErrors()) {
@@ -54,6 +56,7 @@ public class OilController {
     ).body(created);
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @PutMapping("/{id:^[A-Fa-f0-9]{24}$}")
   public Oil updateOil(@PathVariable("id") String id, @Valid @RequestBody Oil oil, Errors errors) {
     if (errors.hasErrors()) {
@@ -65,6 +68,7 @@ public class OilController {
     return oilService.updateOil(oil);
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @DeleteMapping("/{id:^[A-Fa-f0-9]{24}$}")
   public Oil deleteOil(@PathVariable("id") String id) {
     return oilService.deleteOil(id);

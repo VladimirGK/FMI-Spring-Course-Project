@@ -137,7 +137,7 @@ export default class Cart extends Component {
     }
 
     render() {
-        const isEmpty = this.state.autoparts.length == 0;
+        const isEmpty = this.state.autoparts.length == 0 && this.state.batteries.length == 0 && this.state.oils.length == 0 && this.state.supplements.length == 0;
         if (isEmpty) {
             return (
                 <div class="alert alert-success alert-dismissible fade show">

@@ -4,7 +4,7 @@ import com.autodeli.exception.EntityNotFoundException;
 import com.autodeli.exception.InvalidEntityDataException;
 import com.autodeli.repository.user.UserRepository;
 import com.autodeli.service.user.UserService;
-import com.autodeli.web.ShoppingCart;
+import com.autodeli.web.user.ShoppingCart;
 import com.autodeli.web.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -42,7 +42,6 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public User addUser(User user) {
-    user.setId(null);
     PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
     user.setPassword(encoder.encode(user.getPassword()));
     return userRepository.insert(user);

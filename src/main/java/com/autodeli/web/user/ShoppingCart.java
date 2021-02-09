@@ -1,4 +1,4 @@
-package com.autodeli.web;
+package com.autodeli.web.user;
 
 import com.autodeli.web.car.AutoPart;
 import com.autodeli.web.consumable.Battery;

@@ -1,6 +1,6 @@
 package com.autodeli.service.user;
 
-import com.autodeli.web.ShoppingCart;
+import com.autodeli.web.user.ShoppingCart;
 import com.autodeli.web.user.User;
 
 import java.util.List;

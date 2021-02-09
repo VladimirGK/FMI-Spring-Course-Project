@@ -6,6 +6,7 @@ import com.autodeli.web.consumable.Battery;
 import com.autodeli.utils.ErrorHandlingUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +42,7 @@ public class BatteryController {
     return batteryService.getBatteryById(id);
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @PostMapping
   public ResponseEntity<Battery> addBattery(@Valid @RequestBody Battery battery, Errors errors) {
     if (errors.hasErrors()) {
@@ -51,6 +53,7 @@ public class BatteryController {
         .body(created);
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @PutMapping("/{id:^[A-Fa-f0-9]{24}$}")
   public Battery updateBattery(@PathVariable("id") String id, @Valid @RequestBody Battery battery, Errors errors) {
     if (errors.hasErrors()) {
@@ -62,6 +65,7 @@ public class BatteryController {
     return batteryService.updateBattery(battery);
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @DeleteMapping("/{id:^[A-Fa-f0-9]{24}$}")
   public Battery deleteBattery(@PathVariable("id") String id) {
     return batteryService.deleteBattery(id);

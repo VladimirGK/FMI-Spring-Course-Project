@@ -12,6 +12,7 @@ import com.autodeli.web.car.Engine;
 import com.autodeli.web.car.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,6 +54,7 @@ public class BrandController {
     return brandService.getBrandById(id);
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @PostMapping
   public ResponseEntity<Brand> addBrand(@Valid @RequestBody Brand brand, Errors errors) {
     if (errors.hasErrors()) {
@@ -63,6 +65,7 @@ public class BrandController {
         .body(created);
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @PutMapping("/{id:^[A-Fa-f0-9]{24}$}")
   public Brand updateBrand(@PathVariable("id") String id, @Valid @RequestBody Brand brand, Errors errors) {
     if (errors.hasErrors()) {
@@ -74,6 +77,7 @@ public class BrandController {
     return brandService.updateBrand(brand);
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @DeleteMapping("/{id:^[A-Fa-f0-9]{24}$}")
   public Brand deleteBrand(@PathVariable("id") String id) {
     return brandService.deleteBrand(id);

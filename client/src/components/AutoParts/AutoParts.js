@@ -15,13 +15,23 @@ export default class AutoParts extends Component {
     state = {
         items: [],
         isLogged: false,
+        showAdmin: "",
         token: "",
     }
 
     componentDidMount() {
         const user = JSON.parse(localStorage.getItem('user'));
         if (user) {
-            this.setState({ isLogged: true, token: user.token })
+            const roles = [];
+            user.user.authorities.forEach(authority => {
+                roles.push(authority.authority);
+            });
+
+            this.setState({
+                showAdmin: roles.includes("ROLE_ADMIN"),
+                isLogged: true,
+                token: user.token
+            });
         }
         this.setState({})
         axios.get(partsUrl)
@@ -43,6 +53,21 @@ export default class AutoParts extends Component {
             .then(res => {
                 console.log(res);
                 console.log(res.data);
+            })
+    }
+
+    deleteRow(id, e) {
+        const headers = {
+            'Authorization': 'Bearer ' + this.state.token,
+            'Content-Type': 'application/json'
+        }
+        axios.delete(`http://localhost:8080/api/autopart/${id}`, { headers })
+            .then(res => {
+                console.log(res);
+                console.log(res.data);
+
+                const items = this.state.items.filter(item => item.id !== id);
+                this.setState({ items });
             })
     }
 
@@ -68,6 +93,7 @@ export default class AutoParts extends Component {
                                     <div class="col-sm">{item.name}</div>
                                     <div class="col-sm">{item.price}лв.</div>
                                     {this.state.isLogged && <div class="col-sm"><button type="button" class="btn btn-secondary" onClick={(e) => this.addToCart(item, e)}>Добави в количка</button></div>}
+                                    {this.state.showAdmin && <div class="col-sm"><button type="button" class="btn btn-secondary" onClick={(e) => this.deleteRow(item.id, e)}>Delete</button></div>}
                                 </div>
                             ))
                         }

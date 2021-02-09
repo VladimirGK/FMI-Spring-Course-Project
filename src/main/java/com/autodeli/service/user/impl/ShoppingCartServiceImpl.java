@@ -2,10 +2,9 @@ package com.autodeli.service.user.impl;
 
 import com.autodeli.service.user.ShoppingCartService;
 import com.autodeli.service.user.UserService;
-import com.autodeli.web.ShoppingCart;
+import com.autodeli.web.user.ShoppingCart;
 import com.autodeli.web.car.AutoPart;
 import com.autodeli.web.consumable.Battery;
-import com.autodeli.web.consumable.Consumable;
 import com.autodeli.web.consumable.Oil;
 import com.autodeli.web.consumable.Supplement;
 import com.autodeli.web.user.User;
@@ -17,11 +16,10 @@ import java.util.Set;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
-
-    private ShoppingCart shoppingCart;
     @Autowired
     private UserService userService;
 
+    private ShoppingCart shoppingCart;
     private User logged;
 
     private void setUp() {
