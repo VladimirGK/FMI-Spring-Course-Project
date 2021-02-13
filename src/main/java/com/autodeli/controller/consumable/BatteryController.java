@@ -33,7 +33,7 @@ public class BatteryController {
   }
 
   @GetMapping
-  public List<Battery> getAllBatteries() {
+  public List<Battery> getAllBatteries(){
     return batteryService.getAllBatteries();
   }
 

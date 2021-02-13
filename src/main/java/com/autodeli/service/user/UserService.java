@@ -23,5 +23,7 @@ public interface UserService {
 
   ShoppingCart getShoppingCart();
 
+  void emptyShoppingCartForUser(String userId);
+
   long getCount();
 }

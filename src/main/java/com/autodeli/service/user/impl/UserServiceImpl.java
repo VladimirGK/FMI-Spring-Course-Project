@@ -73,6 +73,13 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
+  public void emptyShoppingCartForUser(String userId) {
+    User user = getUserById(userId);
+    user.setShoppingCart(null); // To clean shopping cart after making an order
+    updateUser(user);
+  }
+
+  @Override
   public long getCount() {
     return userRepository.count();
   }

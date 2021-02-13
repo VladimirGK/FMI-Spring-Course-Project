@@ -94,6 +94,7 @@ export default class AutoParts extends Component {
                                     <div class="col-sm">{item.price}лв.</div>
                                     {this.state.isLogged && <div class="col-sm"><button type="button" class="btn btn-secondary" onClick={(e) => this.addToCart(item, e)}>Добави в количка</button></div>}
                                     {this.state.showAdmin && <div class="col-sm"><button type="button" class="btn btn-secondary" onClick={(e) => this.deleteRow(item.id, e)}>Delete</button></div>}
+                                    <hr style={{ marginTop: "10px" }}></hr>
                                 </div>
                             ))
                         }

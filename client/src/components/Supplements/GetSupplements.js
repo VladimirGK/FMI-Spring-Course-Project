@@ -89,6 +89,7 @@ export default class Supplements extends Component {
                                     {this.state.isLogged && <div class="col-sm"><button type="button" class="btn btn-secondary"onClick={(e) => this.addToCart(item, e)}>Добави в количка</button></div>}
                                     {this.state.showAdmin && <div class="col-sm"><button type="button" class="btn btn-secondary" onClick={(e) => this.deleteRow(item.id, e)}>Delete</button></div>}
                                     {this.state.showAdmin && <div class="col-sm"><Link to="/admin" className="btn btn-secondary">Edit</Link></div>}
+                                    <hr style={{ marginTop: "10px" }}></hr>
                                 </div>
                             ))
                         }

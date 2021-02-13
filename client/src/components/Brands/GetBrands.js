@@ -53,6 +53,7 @@ export default class AllOils extends Component {
                                     <div class="col-sm"><img src={item.logoUrl} width="120px" height="120px"></img></div>
                                     <div class="col-sm">{item.name}</div>
                                     <div class="col-sm"><button type="button" class="btn btn-primary" onClick={(e) => this.deleteRow(item.id, e)}>Delete</button></div>
+                                    <hr style={{ marginTop: "10px" }}></hr>
                                 </div>
                             ))
                         }
