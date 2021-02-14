@@ -100,33 +100,35 @@ export default class Cart extends Component {
     }
 
     handleSubmit = event => {
+        const user = JSON.parse(localStorage.getItem('user'));
         event.preventDefault();
+        if (user) {
+            const order = {
+                userId: this.state.userId,
+                firstName: this.state.firstName != "" ? this.state.firstName : user.user.firstName,
+                lastName: this.state.lastName != "" ? this.state.lastName : user.user.lastName,
+                city: this.state.city,
+                address: this.state.address,
+                number: this.state.number,
+                oils: this.state.oils,
+                batteries: this.state.batteries,
+                supplements: this.state.supplements,
+                autoParts: this.state.autoparts,
+                total: this.state.total
+            }
 
-        const order = {
-            userId: this.state.userId,
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            city: this.state.city,
-            address: this.state.address,
-            number: this.state.number,
-            oils: this.state.oils,
-            batteries: this.state.batteries,
-            supplements: this.state.supplements,
-            autoParts: this.state.autoparts,
-            total: this.state.total
+            const headers = {
+                'Authorization': 'Bearer ' + this.state.token,
+                'Content-Type': 'application/json'
+            }
+            console.log(headers)
+            axios.post(`http://localhost:8080/api/order`, order, { headers })
+                .then(res => {
+                    console.log(res);
+                    console.log(res.data);
+                    this.setState({ redirect: true });
+                })
         }
-
-        const headers = {
-            'Authorization': 'Bearer ' + this.state.token,
-            'Content-Type': 'application/json'
-        }
-        console.log(headers)
-        axios.post(`http://localhost:8080/api/order`, order, { headers })
-            .then(res => {
-                console.log(res);
-                console.log(res.data);
-                this.setState({redirect: true});
-            })
     }
 
 
@@ -275,29 +277,29 @@ export default class Cart extends Component {
                         <form style={{ margin: "50px auto", width: "480px", textAlign: "center" }} class="form-inline" onSubmit={this.handleSubmit}>
                             <div style={{ marginTop: "10px" }} class="form-group">
                                 <label for="firstName">Име</label>
-                                <input type="text" class="form-control" id="firstName" onChange={this.changeFirstName}/>
+                                <input type="text" class="form-control" id="firstName" onChange={this.changeFirstName} />
                             </div>
                             <div style={{ marginTop: "10px" }} class="form-group">
                                 <label for="lastName">Фамилия</label>
-                                <input type="text" class="form-control" id="lastName" onChange={this.changeLastName}/>
+                                <input type="text" class="form-control" id="lastName" onChange={this.changeLastName} />
                             </div>
                             <div style={{ marginTop: "10px" }} class="form-group">
                                 <label for="city">Град</label>
-                                <input type="text" class="form-control" id="city" onChange={this.changeCity} required/>
+                                <input type="text" class="form-control" id="city" onChange={this.changeCity} required />
                             </div>
                             <div style={{ marginTop: "10px" }} class="form-group">
                                 <label for="address">Адрес</label>
-                                <input type="text" class="form-control" id="address" onChange={this.changeAddress} required/>
+                                <input type="text" class="form-control" id="address" onChange={this.changeAddress} required />
                             </div>
                             <div style={{ marginTop: "10px" }} class="form-group">
                                 <label for="number">Телефонен номер</label>
-                                <input type="text" class="form-control" id="number" onChange={this.changeNumber} required/>
+                                <input type="text" class="form-control" id="number" onChange={this.changeNumber} required />
                             </div>
 
                             <button style={{ marginTop: "10px" }} type="submit" class="btn btn-danger">Потвърди и плати</button>
                         </form>
                         <h7 style={{ textAlign: "right" }}>* Доставката е до адрес с наложен платеж</h7>
-                        </div>
+                    </div>
                     }
 
                 </div>

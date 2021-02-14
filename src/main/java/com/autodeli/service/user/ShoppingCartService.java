@@ -5,17 +5,17 @@ import com.autodeli.web.consumable.Battery;
 import com.autodeli.web.consumable.Oil;
 import com.autodeli.web.consumable.Supplement;
 
-import java.util.Set;
+import java.util.List;
 
 public interface ShoppingCartService {
 
-  Set<AutoPart> getAllAutoParts();
+  List<AutoPart> getAllAutoParts();
 
-  Set<Battery> getAllBatteries();
+  List<Battery> getAllBatteries();
 
-  Set<Oil> getAllOils();
+  List<Oil> getAllOils();
 
-  Set<Supplement> getAllSupplements();
+  List<Supplement> getAllSupplements();
 
   void addAutoPartToCart(AutoPart autoPart);
 

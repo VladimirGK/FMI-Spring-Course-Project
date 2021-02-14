@@ -74,8 +74,8 @@ public class OrderController {
     private String getMailTextBody(Order order) {
         User user = userService.getUserById(order.getUserId());
         StringBuilder text = new StringBuilder(String.format("New order made for user: %s\n\nFirst name: %s\nLast name: %s\nEmail: %s\nCity: %s\nAddress: %s\nPhone number: %s\n---Products---\n",
-                order.getUserId(), order.getFirstName() != null ? order.getFirstName() : user.getFirstName(),
-                order.getLastName() != null ? order.getLastName() : user.getLastName(), user.getEmail(), order.getCity(),
+                order.getUserId(), !order.getFirstName().equals("") ? order.getFirstName() : user.getFirstName(),
+                !order.getLastName().equals("") ? order.getLastName() : user.getLastName(), user.getEmail(), order.getCity(),
                 order.getAddress(), order.getNumber()));
 
         for(AutoPart autoPart : order.getAutoParts()) {

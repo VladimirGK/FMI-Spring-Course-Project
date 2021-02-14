@@ -8,17 +8,18 @@ import com.autodeli.web.consumable.Supplement;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
 @EqualsAndHashCode
 public class ShoppingCart {
-  private Set<AutoPart> autoParts = new HashSet<>();
-  private Set<Battery> batteries = new HashSet<>();
-  private Set<Oil> oils = new HashSet<>();
-  private Set<Supplement> supplements = new HashSet<>();
-
+  private List<AutoPart> autoParts = new ArrayList<>();
+  private List<Battery> batteries = new ArrayList<>();
+  private List<Oil> oils = new ArrayList<>();
+  private List<Supplement> supplements = new ArrayList<>();
 
   public void addAutoPart(AutoPart autoPart) {
     autoParts.add(autoPart);

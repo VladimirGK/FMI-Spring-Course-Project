@@ -82,9 +82,6 @@ export default class AutoParts extends Component {
         } else {
             return (
                 <div>
-                    <div class="alert alert-success alert-dismissible fade show">
-                        <strong>Търсените авточасти за вашия автомобил</strong>
-                    </div>
                     <div class="container">
                         {
                             this.state.items.map((item) => (

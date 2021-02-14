@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import java.util.List;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
@@ -29,25 +29,25 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public Set<AutoPart> getAllAutoParts() {
+    public List<AutoPart> getAllAutoParts() {
         setUp();
         return shoppingCart.getAutoParts();
     }
 
     @Override
-    public Set<Battery> getAllBatteries() {
+    public List<Battery> getAllBatteries() {
         setUp();
         return shoppingCart.getBatteries();
     }
 
     @Override
-    public Set<Oil> getAllOils() {
+    public List<Oil> getAllOils() {
         setUp();
         return shoppingCart.getOils();
     }
 
     @Override
-    public Set<Supplement> getAllSupplements() {
+    public List<Supplement> getAllSupplements() {
         setUp();
         return shoppingCart.getSupplements();
     }

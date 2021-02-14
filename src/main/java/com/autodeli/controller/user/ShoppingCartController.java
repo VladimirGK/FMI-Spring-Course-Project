@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
+import java.util.List;
 
 @CrossOrigin(maxAge = 3600)
 @RestController
@@ -34,22 +34,22 @@ public class ShoppingCartController {
 
 
   @GetMapping("/autopart")
-  public Set<AutoPart> getAllAutoParts() {
+  public List<AutoPart> getAllAutoParts() {
     return shoppingCartService.getAllAutoParts();
   }
 
   @GetMapping("/battery")
-  public Set<Battery> getAllBatteries() {
+  public List<Battery> getAllBatteries() {
     return shoppingCartService.getAllBatteries();
   }
 
   @GetMapping("/oil")
-  public Set<Oil> getAllOils() {
+  public List<Oil> getAllOils() {
     return shoppingCartService.getAllOils();
   }
 
   @GetMapping("/supplement")
-  public Set<Supplement> getAllSupplements() {
+  public List<Supplement> getAllSupplements() {
     return shoppingCartService.getAllSupplements();
   }
 
@@ -59,25 +59,25 @@ public class ShoppingCartController {
   }
 
   @PostMapping("/autopart")
-  public Set<AutoPart> addAutoPart(@RequestBody AutoPart autoPart) {
+  public List<AutoPart> addAutoPart(@RequestBody AutoPart autoPart) {
     shoppingCartService.addAutoPartToCart(autoPart);
     return getAllAutoParts();
   }
 
   @PostMapping("/battery")
-  public Set<Battery> addBattery(@RequestBody Battery battery) {
+  public List<Battery> addBattery(@RequestBody Battery battery) {
     shoppingCartService.addBatteryToCart(battery);
     return getAllBatteries();
   }
 
   @PostMapping("/oil")
-  public Set<Oil> addOil(@RequestBody Oil oil) {
+  public List<Oil> addOil(@RequestBody Oil oil) {
     shoppingCartService.addOilToCart(oil);
     return getAllOils();
   }
 
   @PostMapping("/supplement")
-  public Set<Supplement> addSupplement(@RequestBody Supplement supplement) {
+  public List<Supplement> addSupplement(@RequestBody Supplement supplement) {
     shoppingCartService.addSupplementToCart(supplement);
     return getAllSupplements();
   }
