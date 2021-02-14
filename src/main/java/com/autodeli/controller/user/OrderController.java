@@ -1,13 +1,19 @@
 package com.autodeli.controller.user;
 
 import com.autodeli.exception.InvalidEntityDataException;
+import com.autodeli.service.EmailService;
 import com.autodeli.service.user.OrderService;
 import com.autodeli.service.user.UserService;
+import com.autodeli.web.car.AutoPart;
+import com.autodeli.web.consumable.Battery;
+import com.autodeli.web.consumable.Oil;
+import com.autodeli.web.consumable.Supplement;
 import com.autodeli.web.user.Order;
 import com.autodeli.web.user.ShoppingCart;
 import com.autodeli.web.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,11 +31,13 @@ import java.util.List;
 public class OrderController {
     private final OrderService orderService;
     private final UserService userService;
+    private final EmailService emailService;
 
     @Autowired
-    public OrderController(OrderService orderService, UserService userService) {
+    public OrderController(EmailService emailService, OrderService orderService, UserService userService) {
         this.orderService = orderService;
         this.userService = userService;
+        this.emailService = emailService;
     }
 
     @GetMapping
@@ -46,11 +54,44 @@ public class OrderController {
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
         Order created = orderService.addOrder(order);
         userService.emptyShoppingCartForUser(order.getUserId());
+        sendMail(order);
 
         return ResponseEntity.created(
                 ServletUriComponentsBuilder.fromCurrentRequest().pathSegment("{id}")
                         .buildAndExpand(created.getId()).toUri()
         ).body(created);
+    }
+
+    private void sendMail(Order order) {
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        message.setTo("autodelibg@gmail.com");
+        message.setSubject("New order");
+        message.setText(getMailTextBody(order));
+        emailService.sendMail(message);
+    }
+
+    private String getMailTextBody(Order order) {
+        User user = userService.getUserById(order.getUserId());
+        StringBuilder text = new StringBuilder(String.format("New order made for user: %s\n\nFirst name: %s\nLast name: %s\nEmail: %s\nCity: %s\nAddress: %s\nPhone number: %s\n---Products---\n",
+                order.getUserId(), order.getFirstName() != null ? order.getFirstName() : user.getFirstName(),
+                order.getLastName() != null ? order.getLastName() : user.getLastName(), user.getEmail(), order.getCity(),
+                order.getAddress(), order.getNumber()));
+
+        for(AutoPart autoPart : order.getAutoParts()) {
+            text.append(String.format("   * AutoPart: %s\n", autoPart.getId()));
+        }
+        for(Oil oil : order.getOils()) {
+            text.append(String.format("   * Oil: %s\n", oil.getId()));
+        }
+        for(Battery battery : order.getBatteries()) {
+            text.append(String.format("   * Battery: %s\n", battery.getId()));
+        }
+        for(Supplement supplement : order.getSupplements()) {
+            text.append(String.format("   * Supplement: %s\n", supplement.getId()));
+        }
+        text.append(String.format("\nTotal price: %s\n", order.getTotal()));
+        return text.toString();
     }
 
     @PutMapping("/{id}")

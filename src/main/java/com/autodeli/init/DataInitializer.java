@@ -8,6 +8,7 @@ import com.autodeli.repository.car.AutoPartRepository;
 import com.autodeli.repository.car.BrandRepository;
 import com.autodeli.repository.car.EngineRepository;
 import com.autodeli.repository.car.ModelRepository;
+import com.autodeli.service.EmailService;
 import com.autodeli.web.user.User;
 import com.autodeli.web.car.AutoPart;
 import com.autodeli.web.car.Brand;
@@ -54,9 +55,12 @@ public class DataInitializer implements CommandLineRunner {
     this.batteryRepository = batteryRepository;
     this.userRepository = userRepository;
   }
+  @Autowired
+  private EmailService emailService;
 
   @Override
   public void run(String... args) throws Exception {
+
 //    autoPartRepository.deleteAll();
 //    engineRepository.deleteAll();
 //    modelRepository.deleteAll();
@@ -94,6 +98,7 @@ public class DataInitializer implements CommandLineRunner {
 //    autoPartRepository.save(new AutoPart("Турбо", "Audi", "A4", "1.9TDI", "https://car-images.bauersecure.com/pagefiles/94153/turbo_050.jpg", 220.20));
 //    autoPartRepository.save(new AutoPart("Трансмисия", "Audi", "A4", "1.9TDI", "https://i.ytimg.com/vi/RQWejyx0gi8/hqdefault.jpg", 102.20));
 //    autoPartRepository.save(new AutoPart("Гуми", "Audi", "A4", "1.9TDI", "https://di-uploads-pod7.dealerinspire.com/usedcarking/uploads/2018/08/tires.png", 102.20));
+
 
   }
 }

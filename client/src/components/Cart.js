@@ -275,11 +275,11 @@ export default class Cart extends Component {
                         <form style={{ margin: "50px auto", width: "480px", textAlign: "center" }} class="form-inline" onSubmit={this.handleSubmit}>
                             <div style={{ marginTop: "10px" }} class="form-group">
                                 <label for="firstName">Име</label>
-                                <input type="text" class="form-control" id="firstName" onChange={this.changeFirstName} required/>
+                                <input type="text" class="form-control" id="firstName" onChange={this.changeFirstName}/>
                             </div>
                             <div style={{ marginTop: "10px" }} class="form-group">
                                 <label for="lastName">Фамилия</label>
-                                <input type="text" class="form-control" id="lastName" onChange={this.changeLastName} required/>
+                                <input type="text" class="form-control" id="lastName" onChange={this.changeLastName}/>
                             </div>
                             <div style={{ marginTop: "10px" }} class="form-group">
                                 <label for="city">Град</label>
