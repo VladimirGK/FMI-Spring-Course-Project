@@ -1,21 +1,23 @@
 import React from 'react';
 import axios from 'axios';
 import { Component } from 'react';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
 
-export default class AllBrands extends Component {
+export default class AllEngines extends Component {
 
     state = {
         items: [],
+        token: ''
     }
 
     componentDidMount() {
-        axios.get(`http://localhost:8080/api/brand`)
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            this.setState({
+                token: user.token
+            });
+        }
+        
+        axios.get(`http://localhost:8080/api/engine`)
             .then(res => {
                 const items = res.data;
                 this.setState({ items });
@@ -25,7 +27,11 @@ export default class AllBrands extends Component {
     }
 
     deleteRow(id, e) {
-        axios.delete(`http://localhost:8080/api/brand/${id}`)
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.state.token,
+        }
+        axios.delete(`http://localhost:8080/api/engine/${id}`, { headers })
             .then(res => {
                 console.log(res);
                 console.log(res.data);
@@ -50,7 +56,8 @@ export default class AllBrands extends Component {
                         {
                             this.state.items.map((item) => (
                                 <div class="row" key={item.id} style={{ marginTop: "20px" }}>
-                                    <div class="col-sm"><img src={item.logoUrl} width="120px" height="120px"></img></div>
+                                    <div class="col-sm">{item.brandName}</div>
+                                    <div class="col-sm">{item.modelName}</div>
                                     <div class="col-sm">{item.name}</div>
                                     <div class="col-sm"><button type="button" class="btn btn-secondary" onClick={(e) => this.deleteRow(item.id, e)}>Delete</button></div>
                                     <hr style={{ marginTop: "10px" }}></hr>

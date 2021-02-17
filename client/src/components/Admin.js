@@ -10,6 +10,12 @@ import GetBatteries from './Batteries/GetBatteries';
 import AddBrand from './Brands/AddBrand'
 import GetBrands from './Brands/GetBrands'
 import AuthenticationService from './UserManagement/AuthenticationService'
+import AddModel from './Models/AddModel';
+import GetModels from './Models/GetModels';
+import AddEngine from './Engines/AddEngine';
+import GetEngines from './Engines/GetEngines';
+
+
 
 export default class Admin extends Component {
     constructor(props) {
@@ -19,6 +25,7 @@ export default class Admin extends Component {
             showAdmin: '',
         }
     }
+
     componentDidMount() {
         const user = AuthenticationService.getCurrentUser();
         if (user) {
@@ -35,6 +42,7 @@ export default class Admin extends Component {
             });
         }
     }
+
     showAction(action) {
         console.log(action)
         switch (action) {
@@ -46,6 +54,10 @@ export default class Admin extends Component {
                 return <AddBattery />
             case "addBrand":
                 return <AddBrand />
+            case "addModel":
+                return <AddModel/>
+            case "addEngine":
+                return <AddEngine/>        
             case "getOils":
                 return <GetOils />
             case "getSupplements":
@@ -54,8 +66,13 @@ export default class Admin extends Component {
                 return <GetBatteries />
             case "getBrands":
                 return <GetBrands />
+            case "getModels":
+                return <GetModels/>    
+            case "getEngines":
+                return <GetEngines/>    
         }
     }
+
     changeAction(e) {
         this.setState({ action: e });
     }

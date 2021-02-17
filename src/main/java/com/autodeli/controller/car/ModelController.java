@@ -1,6 +1,7 @@
 package com.autodeli.controller.car;
 
 import com.autodeli.exception.InvalidEntityDataException;
+import com.autodeli.service.car.BrandService;
 import com.autodeli.service.car.ModelService;
 import com.autodeli.utils.ErrorHandlingUtils;
 import com.autodeli.web.car.Model;
@@ -26,10 +27,12 @@ import java.util.List;
 public class ModelController {
 
   private final ModelService modelService;
+  private final BrandService brandService;
 
   @Autowired
-  public ModelController(ModelService modelService) {
+  public ModelController(ModelService modelService, BrandService brandService) {
     this.modelService = modelService;
+    this.brandService = brandService;
   }
 
   @GetMapping
@@ -45,12 +48,12 @@ public class ModelController {
   @PreAuthorize("hasRole('ADMIN')")
   @PostMapping
   public ResponseEntity<Model> addModel(@Valid @RequestBody Model model, Errors errors) {
-    if (errors.hasErrors()) {
+    if (errors.hasErrors() || brandService.getBrandByName(model.getBrandName()) == null) {
       throw new InvalidEntityDataException("Invalid Model data: ", ErrorHandlingUtils.getErrors(errors));
     }
-    Model created = modelService.addModel(model);
-    return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().pathSegment("{id}").buildAndExpand(created.getId()).toUri())
-        .body(created);
+      Model created = modelService.addModel(model);
+      return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().pathSegment("{id}").buildAndExpand(created.getId()).toUri())
+              .body(created);
   }
 
   @PreAuthorize("hasRole('ADMIN')")

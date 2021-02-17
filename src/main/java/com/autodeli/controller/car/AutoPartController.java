@@ -2,6 +2,9 @@ package com.autodeli.controller.car;
 
 import com.autodeli.exception.InvalidEntityDataException;
 import com.autodeli.service.car.AutoPartService;
+import com.autodeli.service.car.BrandService;
+import com.autodeli.service.car.EngineService;
+import com.autodeli.service.car.ModelService;
 import com.autodeli.utils.ErrorHandlingUtils;
 import com.autodeli.web.car.AutoPart;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,49 +28,57 @@ import java.util.List;
 @RequestMapping("/api/autopart")
 public class AutoPartController {
   
-  private final AutoPartService AutoPartService;
+  private final AutoPartService autoPartService;
+  private final BrandService brandService;
+  private final ModelService modelService;
+  private final EngineService engineService;
 
   @Autowired
-  public AutoPartController(AutoPartService AutoPartService) {
-    this.AutoPartService = AutoPartService;
+  public AutoPartController(AutoPartService autoPartService, BrandService brandService, ModelService modelService, EngineService engineService) {
+    this.autoPartService = autoPartService;
+    this.brandService = brandService;
+    this.modelService = modelService;
+    this.engineService = engineService;
   }
 
   @GetMapping
   public List<AutoPart> getAllAutoParts() {
-    return AutoPartService.getAllAutoParts();
+    return autoPartService.getAllAutoParts();
   }
 
   @GetMapping("/{id:^[A-Fa-f0-9]{24}$}")
   public AutoPart getAutoPartById(@PathVariable("id") String id) {
-    return AutoPartService.getAutoPartById(id);
+    return autoPartService.getAutoPartById(id);
   }
 
   @PreAuthorize("hasRole('ADMIN')")
   @PostMapping
-  public ResponseEntity<AutoPart> addAutoPart(@Valid @RequestBody AutoPart AutoPart, Errors errors) {
-    if (errors.hasErrors()) {
+  public ResponseEntity<AutoPart> addAutoPart(@Valid @RequestBody AutoPart autoPart, Errors errors) {
+    if (errors.hasErrors() || modelService.getModelByName(autoPart.getModelName()) == null || brandService.getBrandByName(autoPart.getBrandName()) == null
+            || engineService.getEngineByName(autoPart.getEngineName()) == null) {
       throw new InvalidEntityDataException("Invalid AutoPart data: ", ErrorHandlingUtils.getErrors(errors));
     }
-    AutoPart created = AutoPartService.addAutoPart(AutoPart);
+
+    AutoPart created = autoPartService.addAutoPart(autoPart);
     return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().pathSegment("{id}").buildAndExpand(created.getId()).toUri())
         .body(created);
   }
 
   @PreAuthorize("hasRole('ADMIN')")
   @PutMapping("/{id:^[A-Fa-f0-9]{24}$}")
-  public AutoPart updateAutoPart(@PathVariable("id") String id, @Valid @RequestBody AutoPart AutoPart, Errors errors) {
+  public AutoPart updateAutoPart(@PathVariable("id") String id, @Valid @RequestBody AutoPart autoPart, Errors errors) {
     if (errors.hasErrors()) {
       throw new InvalidEntityDataException("Invalid AutoPart data: ", ErrorHandlingUtils.getErrors(errors));
     }
-    if (!id.equals(AutoPart.getId())) {
+    if (!id.equals(autoPart.getId())) {
       throw new InvalidEntityDataException("AutoPart ID:%s in the URL differs from ID:%s in the body.");
     }
-    return AutoPartService.updateAutoPart(AutoPart);
+    return autoPartService.updateAutoPart(autoPart);
   }
 
   @PreAuthorize("hasRole('ADMIN')")
   @DeleteMapping("/{id:^[A-Fa-f0-9]{24}$}")
   public AutoPart deleteAutoPart(@PathVariable("id") String id) {
-    return AutoPartService.deleteAutoPart(id);
+    return autoPartService.deleteAutoPart(id);
   }
 }

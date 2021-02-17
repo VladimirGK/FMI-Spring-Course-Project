@@ -1,7 +1,9 @@
 package com.autodeli.controller.car;
 
 import com.autodeli.exception.InvalidEntityDataException;
+import com.autodeli.service.car.BrandService;
 import com.autodeli.service.car.EngineService;
+import com.autodeli.service.car.ModelService;
 import com.autodeli.utils.ErrorHandlingUtils;
 import com.autodeli.web.car.Engine;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +28,14 @@ import java.util.List;
 public class EngineController {
 
   private final EngineService engineService;
-
+  private final BrandService brandService;
+  private final ModelService modelService;
 
   @Autowired
-  public EngineController(EngineService EngineService) {
-    this.engineService = EngineService;
+  public EngineController(EngineService engineService, BrandService brandService, ModelService modelService) {
+    this.engineService = engineService;
+    this.brandService = brandService;
+    this.modelService = modelService;
   }
 
   @GetMapping
@@ -45,11 +50,11 @@ public class EngineController {
 
   @PreAuthorize("hasRole('ADMIN')")
   @PostMapping
-  public ResponseEntity<Engine> addEngine(@Valid @RequestBody Engine Engine, Errors errors) {
-    if (errors.hasErrors()) {
+  public ResponseEntity<Engine> addEngine(@Valid @RequestBody Engine engine, Errors errors) {
+    if (errors.hasErrors() || modelService.getModelByName(engine.getModelName()) == null || brandService.getBrandByName(engine.getBrandName()) == null) {
       throw new InvalidEntityDataException("Invalid Engine data: ", ErrorHandlingUtils.getErrors(errors));
     }
-    Engine created = engineService.addEngine(Engine);
+    Engine created = engineService.addEngine(engine);
     return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().pathSegment("{id}").buildAndExpand(created.getId()).toUri())
         .body(created);
   }
