@@ -6,9 +6,17 @@ export default class AllModels extends Component {
 
     state = {
         items: [],
+        token: ''
     }
 
     componentDidMount() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            this.setState({
+                token: user.token
+            });
+        }
+        
         axios.get(`http://localhost:8080/api/model`)
             .then(res => {
                 const items = res.data;
@@ -19,7 +27,12 @@ export default class AllModels extends Component {
     }
 
     deleteRow(id, e) {
-        axios.delete(`http://localhost:8080/api/model/${id}`)
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + this.state.token,
+        }
+        console.log(headers)
+        axios.delete(`http://localhost:8080/api/model/${id}`, { headers })
             .then(res => {
                 console.log(res);
                 console.log(res.data);
@@ -35,7 +48,7 @@ export default class AllModels extends Component {
         if (isEmpty) {
             return (
                     <div class="alert alert-success alert-dismissible fade show">
-                        <strong>Няма намерени марки</strong>
+                        <strong>Няма намерени модели</strong>
                     </div>
             )
         } else {

@@ -6,6 +6,8 @@ import com.autodeli.web.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +22,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
-@PreAuthorize("hasRole('ADMIN')")
 public class UserController {
   private final UserService userService;
 
@@ -34,11 +35,13 @@ public class UserController {
     return userService.getAllUsers();
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("/{id}")
   public User getUserById(@PathVariable("id") String id) {
     return userService.getUserById(id);
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @PostMapping
   public ResponseEntity<User> createUser(@RequestBody User user) {
     User created = userService.addUser(user);
@@ -50,13 +53,15 @@ public class UserController {
 
   @PutMapping("/{id}")
   public User updateUser(@PathVariable String id, @RequestBody User user) {
-    if (!id.equals(user.getId())) {
-      throw new InvalidEntityDataException(
-          String.format("User URL ID:%s differs from body entity ID:%s", id, user.getId()));
+    User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    if (id.equals(principal.getId()) || SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+      return userService.updateUser(user);
     }
-    return userService.updateUser(user);
+    throw new InvalidEntityDataException(
+            String.format("User URL ID:%s differs from body entity ID:%s", id, user.getId()));
   }
 
+  @PreAuthorize("hasRole('ADMIN')")
   @DeleteMapping("/{id}")
   public User deleteUser(@PathVariable String id) {
     User removed = getUserById(id);

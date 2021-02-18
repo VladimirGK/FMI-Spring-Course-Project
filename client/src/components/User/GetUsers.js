@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Component } from 'react';
 
-export default class AllBrands extends Component {
+export default class AllUsers extends Component {
 
     state = {
         items: [],
@@ -17,7 +17,12 @@ export default class AllBrands extends Component {
             });
         }
 
-        axios.get(`http://localhost:8080/api/brand`)
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + user.token,
+        }
+         console.log(headers);   
+        axios.get(`http://localhost:8080/api/user`, { headers })
             .then(res => {
                 const items = res.data;
                 this.setState({ items });
@@ -31,7 +36,7 @@ export default class AllBrands extends Component {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + this.state.token,
         }
-        axios.delete(`http://localhost:8080/api/brand/${id}`, { headers })
+        axios.delete(`http://localhost:8080/api/user/${id}`, { headers })
             .then(res => {
                 console.log(res);
                 console.log(res.data);
@@ -47,7 +52,7 @@ export default class AllBrands extends Component {
         if (isEmpty) {
             return (
                     <div class="alert alert-success alert-dismissible fade show">
-                        <strong>Няма намерени марки</strong>
+                        <strong>Няма намерени юзъри</strong>
                     </div>
             )
         } else {
@@ -56,8 +61,10 @@ export default class AllBrands extends Component {
                         {
                             this.state.items.map((item) => (
                                 <div class="row" key={item.id} style={{ marginTop: "20px" }}>
-                                    <div class="col-sm"><img src={item.logoUrl} width="120px" height="120px"></img></div>
-                                    <div class="col-sm">{item.name}</div>
+                                    <div class="col-sm">{item.firstName}</div>
+                                    <div class="col-sm">{item.lastName}</div>
+                                    <div class="col-sm">{item.username}</div>
+                                    <div class="col-sm">{item.email}</div>
                                     <div class="col-sm"><button type="button" class="btn btn-secondary" onClick={(e) => this.deleteRow(item.id, e)}>Delete</button></div>
                                     <hr style={{ marginTop: "10px" }}></hr>
                                 </div>

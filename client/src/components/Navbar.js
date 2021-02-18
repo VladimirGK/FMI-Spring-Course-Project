@@ -18,6 +18,7 @@ import Login from "./UserManagement/Login";
 import Cart from './Cart'
 import AuthenticationService from './UserManagement/AuthenticationService'
 import cart from '../cart.png'
+import ProfilePage from "./User/ProfilePage";
 
 
 class Navbar extends Component {
@@ -81,7 +82,7 @@ class Navbar extends Component {
                             <div>
                                 {!this.state.login && <Link class="btn btn-light" style={{ marginRight: "10px" }} a to="/register">Регистрация</Link>}
                                 {!this.state.login && <Link class="btn btn-light" style={{ marginRight: "10px" }} a to="/login">Вход</Link>}
-                                {this.state.login && <Link class="btn btn-light"  style={{ marginRight: "10px" }} a to="/"> Добре дошли, {this.state.username}</Link>}
+                                {this.state.login && <Link class="btn btn-light"  style={{ marginRight: "10px" }} a to="/profile"> Добре дошли, {this.state.username}</Link>}
                                 {this.state.login && <Link a to="/cart"><img src={cart} width="40px" height="40"/></Link>}
                                 {this.state.login && <Link class="btn btn-light" onClick={this.signOut} style={{ marginRight: "10px" }} a to="/">Изход</Link>}
                             </div>
@@ -112,6 +113,9 @@ class Navbar extends Component {
                         </Route>
                         <Route path="/cart">
                             <Cart/>
+                        </Route>
+                        <Route path="/profile">
+                            <ProfilePage/>
                         </Route>
                         <Route path="/">
                             <Home/>

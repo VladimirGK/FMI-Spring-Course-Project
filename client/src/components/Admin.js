@@ -14,7 +14,10 @@ import AddModel from './Models/AddModel';
 import GetModels from './Models/GetModels';
 import AddEngine from './Engines/AddEngine';
 import GetEngines from './Engines/GetEngines';
-
+import AddAutoPart from './AutoParts/AddAutoPart';
+import GetAutoParts from './AutoParts/GetAutoParts';
+import GetUsers from './User/GetUsers'
+import AddUser from './User/AddUser';
 
 
 export default class Admin extends Component {
@@ -57,7 +60,11 @@ export default class Admin extends Component {
             case "addModel":
                 return <AddModel/>
             case "addEngine":
-                return <AddEngine/>        
+                return <AddEngine/> 
+            case "addAutoPart":
+                return <AddAutoPart/>   
+            case "addUser":
+                return <AddUser/>            
             case "getOils":
                 return <GetOils />
             case "getSupplements":
@@ -70,6 +77,10 @@ export default class Admin extends Component {
                 return <GetModels/>    
             case "getEngines":
                 return <GetEngines/>    
+            case "getAutoParts":
+                return <GetAutoParts/>
+            case "getUsers":
+                return <GetUsers/>
         }
     }
 
